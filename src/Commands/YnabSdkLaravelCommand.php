@@ -1,12 +1,12 @@
 <?php
 
-namespace VendorName\Skeleton\Commands;
+namespace DanielHaven\YnabSdkLaravel\Commands;
 
 use Illuminate\Console\Command;
 
-class SkeletonCommand extends Command
+class YnabSdkLaravelCommand extends Command
 {
-    public $signature = 'skeleton';
+    public $signature = 'ynab-sdk-laravel';
 
     public $description = 'My command';
 
