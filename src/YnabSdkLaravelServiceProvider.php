@@ -2,9 +2,10 @@
 
 namespace DanielHaven\YnabSdkLaravel;
 
+use DanielHaven\YnabSdkLaravel\Http\Controllers\YnabCallbackController;
+use Illuminate\Support\Facades\Route;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
-use DanielHaven\YnabSdkLaravel\Commands\YnabSdkLaravelCommand;
 
 class YnabSdkLaravelServiceProvider extends PackageServiceProvider
 {
@@ -17,9 +18,15 @@ class YnabSdkLaravelServiceProvider extends PackageServiceProvider
          */
         $package
             ->name('ynab-sdk-laravel')
-            ->hasConfigFile()
-            ->hasViews()
-            ->hasMigration('create_ynab_sdk_laravel_table')
-            ->hasCommand(YnabSdkLaravelCommand::class);
+            ->hasConfigFile();
+    }
+
+    public function packageRegistered()
+    {
+        Route::macro('ynabSdkLaravelOauth', function (string $baseUrl = 'ynab-oauth', string $baseName = 'ynab-oauth.') {
+            Route::prefix($baseUrl)->name($baseName)->group(function () {
+                Route::get('/callback', YnabCallbackController::class)->name('callback');
+            });
+        });
     }
 }

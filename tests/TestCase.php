@@ -2,12 +2,14 @@
 
 namespace DanielHaven\YnabSdkLaravel\Tests;
 
+use DanielHaven\YnabSdkLaravel\YnabSdkLaravelServiceProvider;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Orchestra\Testbench\TestCase as Orchestra;
-use DanielHaven\YnabSdkLaravel\YnabSdkLaravelServiceProvider;
 
 class TestCase extends Orchestra
 {
+    protected ?array $json = null;
+
     protected function setUp(): void
     {
         parent::setUp();
@@ -27,6 +29,8 @@ class TestCase extends Orchestra
     public function getEnvironmentSetUp($app)
     {
         config()->set('database.default', 'testing');
+
+        $app->setBasePath(__DIR__.'/..');
 
         /*
         $migration = include __DIR__.'/../database/migrations/create_ynab-sdk-laravel_table.php.stub';

@@ -76,7 +76,7 @@
                 "DanielHaven\\YnabSdkLaravel\\YnabSdkLaravelServiceProvider"
             ],
             "aliases": {
-                "YnabSdkLaravel": "DanielHaven\\YnabSdkLaravel\\Facades\\YnabSdkLaravel"
+                "Ynab": "DanielHaven\\YnabSdkLaravel\\Facades\\Ynab"
             }
         }
     },
