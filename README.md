@@ -166,12 +166,11 @@ And add that the `client_secret=456` and the `code=8u32433` (this is retrieved f
 
 The url the controller uses to authenticate with YNAB should look like the following: https://app.ynab.com/oauth/token?client_id=123&client_secret=456&redirect_uri=https%3A%2F%2Fmy-app.com%2Fynab-oauth%2Fcallback&grant_type=authorization_code&code=8u32433
 
-If the request is successful, two events should be thrown.
+If the request is successful, the `AccessTokenRetrieved` is dispatched. It accepts the following values:
+* The response JSON array comprised of: `access_token`, `token_type`, `expires_in`, `refresh_token`
+* A Carbon representing the current date time, which is used (in conjunction with `expires_in`) to determine when the `access_token` will expire
 
-* `RefreshTokenRetrieved` (accepts the `refresh_token` and exposes a `$dateRetrieved` variable to use in conjunction with the `expires_in` value; if missing, the event is not dispatched)
-* `AccessTokenRetrieved` (accepts the `access_token` and `expires_in`, if missing the `access_token`, the event is not dispatched)
-
-Create a listener for the events to interact with the data.
+Create a listener for the event to interact with the data.
 
 > [!IMPORTANT]
 > Also, the controller accepts a `redirect_to` parameter, which is `home` by default. If you do not register a route that is named "home" in your app, the controller will fail with a 500 error.
@@ -198,7 +197,7 @@ This is, of course, configurable (see: [Callback Route Registration](#registring
 
 The controller accepts a `refresh_token` value and then calls YNAB to get a new access token given the information.
 
-If successful, the same events are called to expose the new `access_token`, `expires_in`, and `refresh_token`.
+If successful, `AccessTokenRetrieved` is dispatched to expose the new `access_token`, `expires_in`, and `refresh_token` as well as the time retrieved so that you can determine when to refresh the token again.
 
 ##### When To Refresh The Token
 
@@ -212,7 +211,7 @@ use DanielHaven\YnabSdkLaravel\OauthHelper;
 OauthHelper::getExpirationTimeOfAccessToken($dateRetrieved, $expiresIn);
 ```
 
-The method takes the values which are exposed by the events that run when initially retrieving or refreshing the access token.
+The method takes the values which are exposed by the `AccessTokenRetrieved` event that runs when initially retrieving or refreshing the access token.
 
 ## Running Tests
 

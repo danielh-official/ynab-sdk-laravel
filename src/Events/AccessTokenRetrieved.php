@@ -6,13 +6,14 @@ namespace DanielHaven\YnabSdkLaravel\Events;
 
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Carbon;
 
 class AccessTokenRetrieved
 {
     use Dispatchable, SerializesModels;
 
     public function __construct(
-        public string $accessToken,
-        public ?int $expiresIn = null,
+        public array $data,
+        public Carbon $retrievedAt,
     ) {}
 }

@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace DanielHaven\YnabSdkLaravel\Http\Controllers;
 
 use DanielHaven\YnabSdkLaravel\Events\AccessTokenRetrieved;
-use DanielHaven\YnabSdkLaravel\Events\RefreshTokenRetrieved;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Http;
@@ -27,12 +26,8 @@ class YnabRefreshController extends Controller
 
         $redirectTo = $request->string('redirect_to', 'home')->toString();
 
-        if ($ynabRequest->json('refresh_token')) {
-            RefreshTokenRetrieved::dispatch($ynabRequest->json('refresh_token'), now());
-        }
-
         if ($ynabRequest->json('access_token')) {
-            AccessTokenRetrieved::dispatch($ynabRequest->json('access_token'), $ynabRequest->json('expires_in'));
+            AccessTokenRetrieved::dispatch($ynabRequest->json(), now());
 
             return redirect()->route($redirectTo)->with('success', 'New access token retrieved');
         } else {
