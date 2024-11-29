@@ -4,9 +4,11 @@ declare(strict_types=1);
 
 namespace DanielHaven\YnabSdkLaravel;
 
-final class Oauth
+use Illuminate\Support\Carbon;
+
+final class OauthHelper
 {
-    public function getAuthUrl()
+    public static function getAuthUrl()
     {
         $query = http_build_query([
             'client_id' => config('ynab-sdk-laravel.client.id'),
@@ -15,5 +17,10 @@ final class Oauth
         ]);
 
         return "https://app.ynab.com/oauth/authorize?$query";
+    }
+
+    public static function getExpirationTimeOfAccessToken(Carbon $dateRetrieved, int $expiresIn): Carbon
+    {
+        return Carbon::createFromTimestamp($dateRetrieved->getTimestamp() + $expiresIn);
     }
 }

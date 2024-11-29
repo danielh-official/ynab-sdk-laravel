@@ -86,12 +86,12 @@ Oauth authentication must be used for applications that accept access tokens fro
 
 #### Auth Url
 
-The Auth Url can be retrieved with the `Oauth` class.
+The Auth Url can be retrieved with the `OauthHelper` class.
 
 ```php
-use DanielHaven\YnabSdkLaravel\Oauth;
+use DanielHaven\YnabSdkLaravel\OauthHelper;
 
-(new Oauth)->getAuthUrl();
+OauthHelper::getAuthUrl();
 ```
 
 The auth url uses the following configuration parameters:
