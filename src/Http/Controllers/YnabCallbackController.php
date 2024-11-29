@@ -33,7 +33,7 @@ class YnabCallbackController extends Controller
 
         $ynabRequest = Http::post("https://app.ynab.com/oauth/token?$query")->throw();
 
-        $redirectTo = $request->string('redirect_to', 'home')->toString();
+        $redirectTo = $request->get('redirect_to', 'home');
 
         if ($ynabRequest->json('access_token')) {
             AccessTokenRetrieved::dispatch($ynabRequest->json(), now());
