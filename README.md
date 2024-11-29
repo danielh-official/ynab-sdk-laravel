@@ -156,17 +156,8 @@ if ($request->string('state')) {
 
 Other than the config variables, everything else can be left as is.
 
-Let's reuse the aformentioned parameters:
-
-* `client_id=123`
-* `redirect_uri=https://my-app.com/ynab-oauth/callback`
-* `response_type=code`
-
-And add that the `client_secret=456` and the `code=8u32433` (this is retrieved from accessing the auth url and authorizing on the YNAB page).
-
-The url the controller uses to authenticate with YNAB should look like the following: https://app.ynab.com/oauth/token?client_id=123&client_secret=456&redirect_uri=https%3A%2F%2Fmy-app.com%2Fynab-oauth%2Fcallback&grant_type=authorization_code&code=8u32433
-
 If the request is successful, the `AccessTokenRetrieved` is dispatched. It accepts the following values:
+
 * The response JSON array comprised of: `access_token`, `token_type`, `expires_in`, `refresh_token`
 * A Carbon representing the current date time, which is used (in conjunction with `expires_in`) to determine when the `access_token` will expire
 
