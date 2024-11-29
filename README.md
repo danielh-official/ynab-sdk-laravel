@@ -186,7 +186,33 @@ $ynab = new Ynab('insert-access-token-here');
 
 Be wary that your `access_token` has an expiration date (i.e., `expires_in`). You may track when your token is expiring and then use `refresh_token` to reset your `access_token` without the user having to authenticate on YNAB again.
 
-- [ ] Build controller for refreshing access token
+#### Refresh Route
+
+##### Registering the Route
+
+When you place `Route::ynabSdkLaravelOauth();` in your routes file, you also expose the refresh route. By default, the url should look like this: `https://your-site.com/ynab-oauth/refresh`.
+
+This is, of course, configurable (see: [Callback Route Registration](#registring-the-route)).
+
+##### Accessing the Controller
+
+The controller accepts a `refresh_token` value and then calls YNAB to get a new access token given the information.
+
+If successful, the same events are called to expose the new `access_token`, `expires_in`, and `refresh_token`.
+
+##### When To Refresh The Token
+
+The `OauthHelper` class provides a handy method to calculate the time when the token expires.
+
+```php
+use DanielHaven\YnabSdkLaravel\OauthHelper;
+
+// ...
+
+OauthHelper::getExpirationTimeOfAccessToken($dateRetrieved, $expiresIn);
+```
+
+The method takes the values which are exposed by the events that run when initially retrieving or refreshing the access token.
 
 ## Running Tests
 

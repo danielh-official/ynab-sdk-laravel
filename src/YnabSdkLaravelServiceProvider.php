@@ -3,6 +3,7 @@
 namespace DanielHaven\YnabSdkLaravel;
 
 use DanielHaven\YnabSdkLaravel\Http\Controllers\YnabCallbackController;
+use DanielHaven\YnabSdkLaravel\Http\Controllers\YnabRefreshController;
 use Illuminate\Support\Facades\Route;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
@@ -26,6 +27,7 @@ class YnabSdkLaravelServiceProvider extends PackageServiceProvider
         Route::macro('ynabSdkLaravelOauth', function (string $baseUrl = 'ynab-oauth', string $baseName = 'ynab-oauth.') {
             Route::prefix($baseUrl)->name($baseName)->group(function () {
                 Route::get('/callback', YnabCallbackController::class)->name('callback');
+                Route::get('/refresh', YnabRefreshController::class)->name('refresh');
             });
         });
     }
