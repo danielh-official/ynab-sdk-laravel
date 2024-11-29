@@ -10,6 +10,8 @@ class TestCase extends Orchestra
 {
     protected ?array $json = null;
 
+    public static $latestResponse = null;
+
     protected function setUp(): void
     {
         parent::setUp();
