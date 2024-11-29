@@ -7,9 +7,10 @@ namespace DanielHaven\YnabSdkLaravel\Http\Controllers;
 use DanielHaven\YnabSdkLaravel\Events\AccessTokenRetrieved;
 use DanielHaven\YnabSdkLaravel\Events\RefreshTokenRetrieved;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Http;
 
-class YnabCallbackController
+class YnabCallbackController extends Controller
 {
     public function __invoke(Request $request)
     {
@@ -36,7 +37,7 @@ class YnabCallbackController
         $redirectTo = $request->string('redirect_to', 'home')->toString();
 
         if ($ynabRequest->json('refresh_token')) {
-            RefreshTokenRetrieved::dispatch($ynabRequest->json('refresh_token'));
+            RefreshTokenRetrieved::dispatch($ynabRequest->json('refresh_token'), now());
         }
 
         if ($ynabRequest->json('access_token')) {

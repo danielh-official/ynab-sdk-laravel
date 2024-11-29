@@ -165,7 +165,7 @@ The url the controller uses to authenticate with YNAB should look like the follo
 
 If the request is successful, two events should be thrown.
 
-* `RefreshTokenRetrieved` (accepts the `refresh_token`; if missing, the event is not dispatched)
+* `RefreshTokenRetrieved` (accepts the `refresh_token` and exposes a `$dateRetrieved` variable to use in conjunction with the `expires_in` value; if missing, the event is not dispatched)
 * `AccessTokenRetrieved` (accepts the `access_token` and `expires_in`, if missing the `access_token`, the event is not dispatched)
 
 Create a listener for the events to interact with the data.

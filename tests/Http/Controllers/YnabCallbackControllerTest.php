@@ -36,7 +36,7 @@ it('gets an access token using authorization code grant flow', function () {
     });
 
     Event::assertDispatched(RefreshTokenRetrieved::class, function (RefreshTokenRetrieved $event) {
-        return $event->refreshToken === 'refresh_token';
+        return $event->refreshToken === 'refresh_token' && $event->dateRetrieved->isToday();
     });
 });
 
