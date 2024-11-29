@@ -156,7 +156,7 @@ if ($request->string('state')) {
 
 Other than the config variables, everything else can be left as is.
 
-If the request is successful, the `AccessTokenRetrieved` is dispatched. It accepts the following values:
+If the request is successful, the `AccessTokenRetrieved` event is dispatched. It accepts the following values:
 
 * The response JSON array comprised of: `access_token`, `token_type`, `expires_in`, `refresh_token`
 * A Carbon representing the current date time, which is used (in conjunction with `expires_in`) to determine when the `access_token` will expire
@@ -234,7 +234,7 @@ Please review [our security policy](../../security/policy) on how to report secu
 
 - [Daniel Haven](https://github.com/danielh-official)
 - [All Contributors](../../contributors)
-- 
+
 ## License
 
 The MIT License (MIT). Please see [License File](LICENSE.md) for more information.
