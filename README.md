@@ -1,5 +1,8 @@
 # YNAB SDK for Laravel
 
+> [!NOTE]
+> This project is still a work-in-progress. Install at your own risk!
+
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/danielh-official/ynab-sdk-laravel.svg?style=flat-square)](https://packagist.org/packages/danielh-official/ynab-sdk-laravel)
 [![GitHub Tests Action Status](https://img.shields.io/github/actions/workflow/status/danielh-official/ynab-sdk-laravel/run-tests.yml?branch=main&label=tests&style=flat-square)](https://github.com/danielh-official/ynab-sdk-laravel/actions?query=workflow%3Arun-tests+branch%3Amain)
 [![GitHub Code Style Action Status](https://img.shields.io/github/actions/workflow/status/danielh-official/ynab-sdk-laravel/fix-php-code-style-issues.yml?branch=main&label=code%20style&style=flat-square)](https://github.com/danielh-official/ynab-sdk-laravel/actions?query=workflow%3A"Fix+PHP+code+style+issues"+branch%3Amain)
