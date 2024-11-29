@@ -25,8 +25,8 @@ class YnabCallbackController extends Controller
             $query['scope'] = 'read-only';
         }
 
-        if ($request->string('state')) {
-            $query['state'] = $request->string('state');
+        if ($request->has('state')) {
+            $query['state'] = $request->get('state');
         }
 
         $query = http_build_query($query);
