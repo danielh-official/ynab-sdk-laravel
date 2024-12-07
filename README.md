@@ -1,8 +1,5 @@
 # YNAB SDK for Laravel
 
-> [!NOTE]
-> This project is still a work-in-progress. Install at your own risk!
-
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/danielh-official/ynab-sdk-laravel.svg?style=flat-square)](https://packagist.org/packages/danielh-official/ynab-sdk-laravel)
 [![GitHub Tests Action Status](https://img.shields.io/github/actions/workflow/status/danielh-official/ynab-sdk-laravel/run-tests.yml?branch=main&label=tests&style=flat-square)](https://github.com/danielh-official/ynab-sdk-laravel/actions?query=workflow%3Arun-tests+branch%3Amain)
 [![GitHub Code Style Action Status](https://img.shields.io/github/actions/workflow/status/danielh-official/ynab-sdk-laravel/fix-php-code-style-issues.yml?branch=main&label=code%20style&style=flat-square)](https://github.com/danielh-official/ynab-sdk-laravel/actions?query=workflow%3A"Fix+PHP+code+style+issues"+branch%3Amain)
@@ -35,13 +32,9 @@ return [
         'id' => env('YNAB_SDK_LARAVEL_CLIENT_ID'),
         'secret' => env('YNAB_SDK_LARAVEL_CLIENT_SECRET'),
     ],
-    'callback' => [
-        'base_url' => env('YNAB_SDK_LARAVEL_CALLBACK_URI', 'ynab-oauth'),
-        'base_name' => env('YNAB_SDK_LARAVEL_CALLBACK_URI', 'ynab-oauth'),
-    ],
-    'refresh' => [
-        'base_url' => env('YNAB_SDK_LARAVEL_CALLBACK_URI', 'ynab-oauth'),
-        'base_name' => env('YNAB_SDK_LARAVEL_CALLBACK_URI', 'ynab-oauth'),
+    'oauth' => [
+        'base_url' => env('YNAB_SDK_LARAVEL_OAUTH_BASE_URL', 'ynab-oauth'),
+        'base_name' => env('YNAB_SDK_LARAVEL_OAUTH_BASE_NAME', 'ynab-oauth'),
     ],
     'response_type' => env('YNAB_SDK_LARAVEL_RESPONSE_TYPE', 'code'),
 ];
@@ -111,7 +104,7 @@ The auth url uses the following configuration parameters:
 ```php
 [
     'client_id' => config('ynab-sdk-laravel.client.id'),
-    'redirect_uri' => route('ynab-oauth.callback'),
+    'redirect_uri' => route(config('ynab-sdk-laravel.oauth.base_name').'.callback'),
     'response_type' => config('ynab-sdk-laravel.response_type'),
 ]
 ```
@@ -155,7 +148,7 @@ The controller builds the route that is used to authenticate with YNAB. Here are
 $query = [
     'client_id' => config('ynab-sdk-laravel.client.id'),
     'client_secret' => config('ynab-sdk-laravel.client.secret'),
-    'redirect_uri' => route('ynab-oauth.callback')
+    'redirect_uri' => route(config('ynab-sdk-laravel.oauth.base_name').'.callback'),
     'grant_type' => $request->query('grant_type', 'authorization_code'),
     'code' => $request->query('code'),
 ];
@@ -164,10 +157,9 @@ if ($request->boolean('use_readonly_scope')) {
     $query['scope'] = 'read-only';
 }
 
-if ($request->string('state')) {
-    $query['state'] = $request->string('state');
+if ($request->has('state')) {
+    $query['state'] = $request->get('state');
 }
-
 ```
 
 Other than the config variables, everything else can be left as is.
