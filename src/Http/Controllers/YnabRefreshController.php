@@ -13,6 +13,10 @@ class YnabRefreshController extends Controller
 {
     public function __invoke(Request $request)
     {
+        if ($request->missing('refresh_token')) {
+            abort(400, 'Refresh token is required');
+        }
+
         $query = [
             'client_id' => config('ynab-sdk-laravel.client.id'),
             'client_secret' => config('ynab-sdk-laravel.client.secret'),

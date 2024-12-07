@@ -65,3 +65,20 @@ it('fails to get an access token using authorization code grant flow', function 
 
     Event::assertNotDispatched(AccessTokenRetrieved::class);
 });
+
+it('is missing authorization code', function () {
+    Event::fake();
+
+    Config::set('ynab-sdk-laravel.client.id', 'client-id');
+    Config::set('ynab-sdk-laravel.client.secret', 'client-secret');
+    Config::set('ynab-sdk-laravel.redirect_uri', 'redirect-uri');
+
+    get(route('ynab-oauth.callback', [
+        'use_readonly_scope' => true,
+        'state' => 'state',
+    ]))->assertBadRequest();
+
+    Event::assertNotDispatched(AccessTokenRetrieved::class);
+
+    Http::assertNothingSent();
+});

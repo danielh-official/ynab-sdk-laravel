@@ -13,6 +13,10 @@ class YnabCallbackController extends Controller
 {
     public function __invoke(Request $request)
     {
+        if ($request->missing('code')) {
+            abort(400, 'Authorization code is required');
+        }
+
         $query = [
             'client_id' => config('ynab-sdk-laravel.client.id'),
             'client_secret' => config('ynab-sdk-laravel.client.secret'),

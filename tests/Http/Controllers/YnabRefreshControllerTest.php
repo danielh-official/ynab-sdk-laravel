@@ -59,3 +59,17 @@ it('fails to get an access token using authorization code grant flow', function 
 
     Event::assertNotDispatched(AccessTokenRetrieved::class);
 });
+
+it('is missing refresh token', function () {
+    Event::fake();
+
+    Config::set('ynab-sdk-laravel.client.id', 'client-id');
+    Config::set('ynab-sdk-laravel.client.secret', 'client-secret');
+    Config::set('ynab-sdk-laravel.redirect_uri', 'redirect-uri');
+
+    get(route('ynab-oauth.refresh'))->assertBadRequest();
+
+    Event::assertNotDispatched(AccessTokenRetrieved::class);
+
+    Http::assertNothingSent();
+});
