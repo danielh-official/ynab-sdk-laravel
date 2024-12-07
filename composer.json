@@ -4,8 +4,10 @@
     "license": "MIT",
     "keywords": [
         "Daniel Haven",
+        "ynab-sdk-laravel",
         "laravel",
-        "ynab-sdk-laravel"
+        "ynab",
+        "sdk"
     ],
     "authors": [
         {
