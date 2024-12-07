@@ -24,7 +24,10 @@ class YnabSdkLaravelServiceProvider extends PackageServiceProvider
 
     public function packageRegistered()
     {
-        Route::macro('ynabSdkLaravelOauth', function (string $baseUrl = 'ynab-oauth', string $baseName = 'ynab-oauth.') {
+        Route::macro('ynabSdkLaravelOauth', function () {
+            $baseUrl = config('ynab-sdk-laravel.oauth.base_url');
+            $baseName = config('ynab-sdk-laravel.oauth.base_name').'.';
+
             Route::prefix($baseUrl)->name($baseName)->group(function () {
                 Route::get('/callback', YnabCallbackController::class)->name('callback');
                 Route::get('/refresh', YnabRefreshController::class)->name('refresh');

@@ -4,13 +4,7 @@ use DanielHaven\YnabSdkLaravel\OauthHelper;
 use Illuminate\Support\Carbon;
 
 it('gets the auth url', function () {
-    $query = http_build_query([
-        'client_id' => config('ynab-sdk-laravel.client.id'),
-        'redirect_uri' => config('ynab-sdk-laravel.redirect_uri'),
-        'response_type' => config('ynab-sdk-laravel.response_type'),
-    ]);
-
-    expect((new OauthHelper)->getAuthUrl())->toBe("https://app.ynab.com/oauth/authorize?$query");
+    expect((new OauthHelper)->getAuthUrl())->toBe('https://app.ynab.com/oauth/authorize?redirect_uri=http%253A%252F%252Flocalhost%252Fynab-oauth%252Fcallback&response_type=code');
 });
 
 it('gets the expiration date', function () {

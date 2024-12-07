@@ -35,10 +35,18 @@ return [
         'id' => env('YNAB_SDK_LARAVEL_CLIENT_ID'),
         'secret' => env('YNAB_SDK_LARAVEL_CLIENT_SECRET'),
     ],
-    'redirect_uri' => env('YNAB_SDK_LARAVEL_REDIRECT_URI', 'http://localhost'),
+    'callback' => [
+        'base_url' => env('YNAB_SDK_LARAVEL_CALLBACK_URI', 'ynab-oauth'),
+        'base_name' => env('YNAB_SDK_LARAVEL_CALLBACK_URI', 'ynab-oauth'),
+    ],
+    'refresh' => [
+        'base_url' => env('YNAB_SDK_LARAVEL_CALLBACK_URI', 'ynab-oauth'),
+        'base_name' => env('YNAB_SDK_LARAVEL_CALLBACK_URI', 'ynab-oauth'),
+    ],
     'response_type' => env('YNAB_SDK_LARAVEL_RESPONSE_TYPE', 'code'),
 ];
 ```
+
 ## Usage
 
 ### Personal Access Tokens
@@ -53,15 +61,15 @@ $ynab = new Ynab('insert-access-token-here');
 
 This class exposes 9 resource methods for accessing YNAB's API (see: https://api.ynab.com/v1).
 
-* `$ynab->user()`
-* `$ynab->budgets()`
-* `$ynab->accounts()`
-* `$ynab->categories()`
-* `$ynab->payees()`
-* `$ynab->payeeLocations()`
-* `$ynab->months()`
-* `$ynab->transactions()`
-* `$ynab->scheduledTransactions()`
+-   `$ynab->user()`
+-   `$ynab->budgets()`
+-   `$ynab->accounts()`
+-   `$ynab->categories()`
+-   `$ynab->payees()`
+-   `$ynab->payeeLocations()`
+-   `$ynab->months()`
+-   `$ynab->transactions()`
+-   `$ynab->scheduledTransactions()`
 
 Each method within its resource aligns with an endpoint:
 
@@ -83,6 +91,7 @@ final class User extends Resource
     }
 }
 ```
+
 ### Oauth
 
 Oauth authentication must be used for applications that accept access tokens from other users (see: https://api.ynab.com/#oauth-applications).
@@ -102,16 +111,16 @@ The auth url uses the following configuration parameters:
 ```php
 [
     'client_id' => config('ynab-sdk-laravel.client.id'),
-    'redirect_uri' => config('ynab-sdk-laravel.redirect_uri'),
+    'redirect_uri' => route('ynab-oauth.callback'),
     'response_type' => config('ynab-sdk-laravel.response_type'),
 ]
 ```
 
 With the following parameters:
 
-* `client_id=123`
-* `redirect_uri=https://my-app.com/ynab-oauth/callback`
-* `response_type=code`
+-   `client_id=123`
+-   `redirect_uri=https://my-app.com/ynab-oauth/callback`
+-   `response_type=code`
 
 The auth url should be the following: https://app.ynab.com/oauth/authorize?client_id=123&redirect_uri=https%3A%2F%2Fmy-app.com%2Fynab-oauth%2Fcallback&response_type=code
 
@@ -127,9 +136,16 @@ A configurable route macro is registered by the package.
 
 Place `Route::ynabSdkLaravelOauth();` in your routes file to instantiate it. By default, the url should look like this: `https://your-site.com/ynab-oauth/callback`.
 
-You can configure the `$baseUrl` and `$baseName` like so: `Route::ynabSdkLaravelOauth('my-ynab-oauth', 'my-ynab-oauth');`. The route should then look like this: `https://your-site.com/my-ynab-oauth/callback`.
+You can configure the `$baseUrl` and `$baseName` in the `.env` like so:
 
-The second argument is for the name, such that you can access the route using something like `redirect()->route('my-ynab-oauth')`.
+```
+YNAB_SDK_LARAVEL_OAUTH_BASE_URL='my-ynab-oauth'
+YNAB_SDK_LARAVEL_OAUTH_BASE_NAME='my-ynab-oauth'
+```
+
+The route should then look like this: `https://your-site.com/my-ynab-oauth/callback`.
+
+The second variable is for the name, such that you can access the route using something like `redirect()->route(config('ynab-sdk-laravel.oauth.base_name') . '.callback')`.
 
 ##### Accessing the Controller
 
@@ -139,7 +155,7 @@ The controller builds the route that is used to authenticate with YNAB. Here are
 $query = [
     'client_id' => config('ynab-sdk-laravel.client.id'),
     'client_secret' => config('ynab-sdk-laravel.client.secret'),
-    'redirect_uri' => config('ynab-sdk-laravel.redirect_uri'),
+    'redirect_uri' => route('ynab-oauth.callback')
     'grant_type' => $request->query('grant_type', 'authorization_code'),
     'code' => $request->query('code'),
 ];
@@ -158,8 +174,8 @@ Other than the config variables, everything else can be left as is.
 
 If the request is successful, the `AccessTokenRetrieved` event is dispatched. It accepts the following values:
 
-* The response JSON array comprised of: `access_token`, `token_type`, `expires_in`, `refresh_token`
-* A Carbon representing the current date time, which is used (in conjunction with `expires_in`) to determine when the `access_token` will expire
+-   The response JSON array comprised of: `access_token`, `token_type`, `expires_in`, `refresh_token`
+-   A Carbon representing the current date time, which is used (in conjunction with `expires_in`) to determine when the `access_token` will expire
 
 Create a listener for the event to interact with the data.
 
@@ -232,8 +248,8 @@ Please review [our security policy](../../security/policy) on how to report secu
 
 ## Credits
 
-- [Daniel Haven](https://github.com/danielh-official)
-- [All Contributors](../../contributors)
+-   [Daniel Haven](https://github.com/danielh-official)
+-   [All Contributors](../../contributors)
 
 ## License
 

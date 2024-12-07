@@ -20,7 +20,7 @@ class YnabCallbackController extends Controller
         $query = [
             'client_id' => config('ynab-sdk-laravel.client.id'),
             'client_secret' => config('ynab-sdk-laravel.client.secret'),
-            'redirect_uri' => config('ynab-sdk-laravel.redirect_uri'),
+            'redirect_uri' => urlencode(route(config('ynab-sdk-laravel.oauth.base_name').'.callback')),
             'grant_type' => $request->query('grant_type', 'authorization_code'),
             'code' => $request->query('code'),
         ];

@@ -15,9 +15,8 @@ it('gets an access token using authorization code grant flow', function () {
 
     Config::set('ynab-sdk-laravel.client.id', 'client-id');
     Config::set('ynab-sdk-laravel.client.secret', 'client-secret');
-    Config::set('ynab-sdk-laravel.redirect_uri', 'redirect-uri');
 
-    $route = 'https://app.ynab.com/oauth/token?client_id=client-id&client_secret=client-secret&redirect_uri=redirect-uri&grant_type=authorization_code&code=code&scope=read-only&state=state';
+    $route = 'https://app.ynab.com/oauth/token?client_id=client-id&client_secret=client-secret&redirect_uri=http%253A%252F%252Flocalhost%252Fynab-oauth%252Fcallback&grant_type=authorization_code&code=code&scope=read-only&state=state';
 
     Http::fake([
         $route => Http::response([
@@ -47,9 +46,8 @@ it('fails to get an access token using authorization code grant flow', function 
 
     Config::set('ynab-sdk-laravel.client.id', 'client-id');
     Config::set('ynab-sdk-laravel.client.secret', 'client-secret');
-    Config::set('ynab-sdk-laravel.redirect_uri', 'redirect-uri');
 
-    $route = 'https://app.ynab.com/oauth/token?client_id=client-id&client_secret=client-secret&redirect_uri=redirect-uri&grant_type=authorization_code&code=code&scope=read-only&state=state';
+    $route = 'https://app.ynab.com/oauth/token?client_id=client-id&client_secret=client-secret&redirect_uri=http%253A%252F%252Flocalhost%252Fynab-oauth%252Fcallback&grant_type=authorization_code&code=code&scope=read-only&state=state';
 
     Http::fake([
         $route => Http::response([
@@ -71,7 +69,6 @@ it('is missing authorization code', function () {
 
     Config::set('ynab-sdk-laravel.client.id', 'client-id');
     Config::set('ynab-sdk-laravel.client.secret', 'client-secret');
-    Config::set('ynab-sdk-laravel.redirect_uri', 'redirect-uri');
 
     get(route('ynab-oauth.callback', [
         'use_readonly_scope' => true,

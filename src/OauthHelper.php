@@ -12,7 +12,7 @@ final class OauthHelper
     {
         $query = http_build_query([
             'client_id' => config('ynab-sdk-laravel.client.id'),
-            'redirect_uri' => config('ynab-sdk-laravel.redirect_uri'),
+            'redirect_uri' => urlencode(route(config('ynab-sdk-laravel.oauth.base_name').'.callback')),
             'response_type' => config('ynab-sdk-laravel.response_type'),
         ]);
 
