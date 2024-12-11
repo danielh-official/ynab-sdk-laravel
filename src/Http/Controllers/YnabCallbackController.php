@@ -21,30 +21,24 @@ class YnabCallbackController extends Controller
             'client_id' => config('ynab-sdk-laravel.client.id'),
             'client_secret' => config('ynab-sdk-laravel.client.secret'),
             'redirect_uri' => route(config('ynab-sdk-laravel.oauth.base_name').'.callback'),
-            'grant_type' => $request->query('grant_type', 'authorization_code'),
+            'grant_type' => 'authorization_code',
             'code' => $request->query('code'),
         ];
-
-        if ($request->boolean('use_readonly_scope')) {
-            $query['scope'] = 'read-only';
-        }
-
-        if ($request->has('state')) {
-            $query['state'] = $request->get('state');
-        }
 
         $query = http_build_query($query);
 
         $ynabRequest = Http::post("https://app.ynab.com/oauth/token?$query")->throw();
 
-        $redirectTo = $request->get('redirect_to', 'home');
+        $afterCallback = config('ynab-sdk-laravel.redirect_to.after_callback');
+
+        $redirectTo = config('ynab-sdk-laravel.redirect_to.use_route_names', true) ? route($afterCallback) : $afterCallback;
 
         if ($ynabRequest->json('access_token')) {
             AccessTokenRetrieved::dispatch($ynabRequest->json(), now());
 
-            return redirect()->route($redirectTo)->with('success', 'Access token retrieved');
+            return redirect($redirectTo)->with('success', 'Access token retrieved');
         } else {
-            return redirect()->route($redirectTo)->with('error', 'Failed to get access token');
+            return redirect($redirectTo)->with('error', 'Failed to get access token');
         }
     }
 }

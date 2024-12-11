@@ -16,7 +16,7 @@ it('gets an access token using authorization code grant flow', function () {
     Config::set('ynab-sdk-laravel.client.id', 'client-id');
     Config::set('ynab-sdk-laravel.client.secret', 'client-secret');
 
-    $route = 'https://app.ynab.com/oauth/token?client_id=client-id&client_secret=client-secret&redirect_uri=http%3A%2F%2Flocalhost%2Fynab-oauth%2Fcallback&grant_type=authorization_code&code=code&scope=read-only&state=state';
+    $route = 'https://app.ynab.com/oauth/token?client_id=client-id&client_secret=client-secret&redirect_uri=http%3A%2F%2Flocalhost%2Fynab-oauth%2Fcallback&grant_type=authorization_code&code=code';
 
     Http::fake([
         $route => Http::response([
@@ -28,8 +28,6 @@ it('gets an access token using authorization code grant flow', function () {
 
     get(route('ynab-oauth.callback', [
         'code' => 'code',
-        'use_readonly_scope' => true,
-        'state' => 'state',
     ]))->assertRedirect(route('home'))->assertSessionHas('success', 'Access token retrieved');
 
     Event::assertDispatched(AccessTokenRetrieved::class, function (AccessTokenRetrieved $event) {
@@ -47,7 +45,7 @@ it('fails to get an access token using authorization code grant flow', function 
     Config::set('ynab-sdk-laravel.client.id', 'client-id');
     Config::set('ynab-sdk-laravel.client.secret', 'client-secret');
 
-    $route = 'https://app.ynab.com/oauth/token?client_id=client-id&client_secret=client-secret&redirect_uri=http%3A%2F%2Flocalhost%2Fynab-oauth%2Fcallback&grant_type=authorization_code&code=code&scope=read-only&state=state';
+    $route = 'https://app.ynab.com/oauth/token?client_id=client-id&client_secret=client-secret&redirect_uri=http%3A%2F%2Flocalhost%2Fynab-oauth%2Fcallback&grant_type=authorization_code&code=code';
 
     Http::fake([
         $route => Http::response([
@@ -57,8 +55,6 @@ it('fails to get an access token using authorization code grant flow', function 
 
     get(route('ynab-oauth.callback', [
         'code' => 'code',
-        'use_readonly_scope' => true,
-        'state' => 'state',
     ]))->assertRedirect(route('home'))->assertSessionHas('error', 'Failed to get access token');
 
     Event::assertNotDispatched(AccessTokenRetrieved::class);
@@ -70,10 +66,7 @@ it('is missing authorization code', function () {
     Config::set('ynab-sdk-laravel.client.id', 'client-id');
     Config::set('ynab-sdk-laravel.client.secret', 'client-secret');
 
-    get(route('ynab-oauth.callback', [
-        'use_readonly_scope' => true,
-        'state' => 'state',
-    ]))->assertBadRequest();
+    get(route('ynab-oauth.callback'))->assertBadRequest();
 
     Event::assertNotDispatched(AccessTokenRetrieved::class);
 

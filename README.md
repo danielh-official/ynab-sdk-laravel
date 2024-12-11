@@ -37,6 +37,11 @@ return [
         'base_name' => env('YNAB_SDK_LARAVEL_OAUTH_BASE_NAME', 'ynab-oauth'),
     ],
     'response_type' => env('YNAB_SDK_LARAVEL_RESPONSE_TYPE', 'code'),
+    'redirect_to' => [
+        'use_route_names' => env('YNAB_SDK_LARAVEL_REDIRECT_TO_USE_ROUTE_NAMES', true),
+        'after_callback' => env('YNAB_SDK_LARAVEL_REDIRECT_TO_AFTER_CALLBACK', 'home'),
+        'after_refresh' => env('YNAB_SDK_LARAVEL_REDIRECT_TO_AFTER_REFRESH', 'home'),
+    ]
 ];
 ```
 
@@ -153,13 +158,13 @@ $query = [
     'code' => $request->query('code'),
 ];
 
-if ($request->boolean('use_readonly_scope')) {
-    $query['scope'] = 'read-only';
-}
+$query = http_build_query($query);
 
-if ($request->has('state')) {
-    $query['state'] = $request->get('state');
-}
+$ynabRequest = Http::post("https://app.ynab.com/oauth/token?$query")->throw();
+
+$afterCallback = config('ynab-sdk-laravel.redirect_to.after_callback');
+
+$redirectTo = config('ynab-sdk-laravel.redirect_to.use_route_names', true) ? route($afterCallback) : $afterCallback;
 ```
 
 Other than the config variables, everything else can be left as is.
@@ -172,7 +177,13 @@ If the request is successful, the `AccessTokenRetrieved` event is dispatched. It
 Create a listener for the event to interact with the data.
 
 > [!IMPORTANT]
-> Also, the controller accepts a `redirect_to` parameter, which is `home` by default. If you do not register a route that is named "home" in your app, the controller will fail with a 500 error.
+> Also, the controller uses a config (`ynab-sdk-laravel.redirect_to.after_callback`), which is "home" by default.
+> 
+> The config (`ynab-sdk-laravel.redirect_to.use_route_names`) dictates that the aformentioned config variable should be treated as a route name.
+> 
+> You may set it to false if you want to the literal route path.
+> 
+> If you make no changes, then the route name "home" is where the controller will be redirected to. If you do not register a route that is named "home" in your app, the controller will fail with a 500 error.
 
 Once you have the `access_token`, you can access the API the way you would with a personal access token:
 

@@ -28,14 +28,16 @@ class YnabRefreshController extends Controller
 
         $ynabRequest = Http::post("https://app.ynab.com/oauth/token?$query")->throw();
 
-        $redirectTo = $request->get('redirect_to', 'home');
+        $afterRefresh = config('ynab-sdk-laravel.redirect_to.after_refresh');
+
+        $redirectTo = config('ynab-sdk-laravel.redirect_to.use_route_names', true) ? route($afterRefresh) : $afterRefresh;
 
         if ($ynabRequest->json('access_token')) {
             AccessTokenRetrieved::dispatch($ynabRequest->json(), now());
 
-            return redirect()->route($redirectTo)->with('success', 'New access token retrieved');
+            return redirect($redirectTo)->with('success', 'New access token retrieved');
         } else {
-            return redirect()->route($redirectTo)->with('error', 'Failed to get new access token');
+            return redirect($redirectTo)->with('error', 'Failed to get new access token');
         }
     }
 }
