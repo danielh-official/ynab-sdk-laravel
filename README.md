@@ -9,10 +9,8 @@
 
 The YNAB SDK for Laravel provides an expressive interface for interacting with YNAB's API within a Laravel application.
 
-> [!NOTE]
-> A wiki is being made to host most of this content.
->
-> For testing this package on a Laravel template, I made a repo: [ynab-sdk-laravel-template](https://github.com/danielh-official/ynab-sdk-laravel-template).
+> [!TIP]
+> For testing this package on a Laravel template, you can clone this repo: [ynab-sdk-laravel-template](https://github.com/danielh-official/ynab-sdk-laravel-template).
 
 ## Installation
 
