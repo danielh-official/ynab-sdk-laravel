@@ -76,7 +76,7 @@
         ],
         "clear": "@php vendor/bin/testbench package:purge-ynab-sdk-laravel --ansi",
         "format": "vendor/bin/pint",
-        "lint": "vendor/bin/pint --dirty",
+        "format-dirty": "vendor/bin/pint --dirty",
         "prepare": "@php vendor/bin/testbench package:discover --ansi",
         "start": [
             "Composer\\Config::disableProcessTimeout",
