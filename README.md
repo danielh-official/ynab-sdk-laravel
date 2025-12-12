@@ -5,6 +5,9 @@
 [![GitHub Code Style Action Status](https://img.shields.io/github/actions/workflow/status/ynab-sdk-laravel/ynab-sdk-laravel/fix-php-code-style-issues.yml?branch=main&label=code%20style&style=flat-square)](https://github.com/ynab-sdk-laravel/ynab-sdk-laravel/actions?query=workflow%3A"Fix+PHP+code+style+issues"+branch%3Amain)
 [![Total Downloads](https://img.shields.io/packagist/dt/ynab-sdk-laravel/ynab-sdk-laravel.svg?style=flat-square)](https://packagist.org/packages/ynab-sdk-laravel/ynab-sdk-laravel)
 
+> [!IMPORTANT]
+> If you use this package, please be sure to leave a star on the repository. It would help a lot!
+
 ## Introduction
 
 The YNAB SDK for Laravel provides an expressive interface for interacting with YNAB's API within a Laravel application.
