@@ -71,14 +71,6 @@ Install the project dependencies using Composer:
 composer install
 ```
 
-### Setup for Testing
-
-The project uses [Pest PHP](https://pestphp.com/) for testing. After installing dependencies, you're ready to run tests:
-
-```bash
-composer test
-```
-
 ## Development Workflow
 
 ### 1. Create a Feature Branch
@@ -90,12 +82,6 @@ git checkout -b feature/your-feature-name
 # or
 git checkout -b fix/your-bug-fix
 ```
-
-Use descriptive branch names:
-- `feature/` for new features
-- `fix/` for bug fixes
-- `docs/` for documentation changes
-- `refactor/` for code refactoring
 
 ### 2. Make Your Changes
 
@@ -109,7 +95,7 @@ Use descriptive branch names:
 - Add tests for new features
 - Update existing tests if you modify functionality
 - Ensure all tests pass before submitting your PR
-- Aim for good test coverage
+- Aim for good test coverage with regard to use cases
 
 Run tests with:
 
@@ -133,10 +119,10 @@ This project uses [Laravel Pint](https://laravel.com/docs/pint) for code formatt
 composer format
 ```
 
-To check for style issues without fixing them:
+To format only dirty code:
 
 ```bash
-composer lint
+composer format-dirty
 ```
 
 #### Static Analysis
@@ -156,7 +142,7 @@ Write clear, descriptive commit messages following these guidelines:
 - Use the present tense ("Add feature" not "Added feature")
 - Use the imperative mood ("Move cursor to..." not "Moves cursor to...")
 - Start with a capital letter
-- Keep the first line under 72 characters
+- Keep the first line under 72 characters when possible
 - Add a blank line after the first line, then provide more details if needed
 
 Examples:
@@ -185,27 +171,7 @@ git rebase upstream/main
 
 ## Testing
 
-This project uses Pest PHP for testing. Tests are located in the `tests/` directory.
-
-### Running Tests
-
-Run all tests:
-
-```bash
-composer test
-```
-
-Run tests with coverage:
-
-```bash
-composer test-coverage
-```
-
-Run specific test files:
-
-```bash
-vendor/bin/pest tests/YourTestFile.php
-```
+The project uses [Pest PHP](https://pestphp.com/) for testing. After installing dependencies, you're ready to run tests:
 
 ### Writing Tests
 
@@ -235,13 +201,12 @@ test('it can retrieve a budget', function () {
    - Run `composer format` to format your code
    - Run `composer analyse` and fix any issues
 3. **Update documentation**: Update the README.md or Wiki if your changes affect usage
-4. **Update the CHANGELOG**: Add an entry under the "Unreleased" section following the [Keep a Changelog](https://keepachangelog.com/) format
-5. **Link related issues**: Reference any related issues in your PR description (e.g., "Fixes #123")
-6. **Provide a clear PR description**:
+4. **Link related issues**: Reference any related issues in your PR description (e.g., "Fixes #123")
+5. **Provide a clear PR description**:
    - Describe what changes you made and why
    - Include any breaking changes
    - Add screenshots if applicable
-7. **Request a review**: Once your PR is ready, request a review from a maintainer
+6. **Request a review**: Once your PR is ready, request a review from a maintainer
 
 ### PR Title Guidelines
 
