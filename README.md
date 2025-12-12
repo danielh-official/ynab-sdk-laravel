@@ -23,10 +23,20 @@ You can install the package via composer:
 composer require ynab-sdk-laravel/ynab-sdk-laravel
 ```
 
-You can publish the config file with:
+You can publish the following files with:
 
 ```bash
-php artisan vendor:publish --tag="ynab-sdk-laravel-config"
+# config
+
+php artisan vendor:publish --tag=ynab-sdk-laravel-config
+
+# views
+
+php artisan vendor:publish --tag=ynab-sdk-laravel-views
+
+# migrations
+
+php artisan vendor:publish --tag=ynab-sdk-laravel-migrations
 ```
 
 ## Usage
