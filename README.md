@@ -29,45 +29,9 @@ You can publish the config file with:
 php artisan vendor:publish --tag="ynab-sdk-laravel-config"
 ```
 
-This is the contents of the published config file:
-
-```php
-return [
-    'base_url' => 'https://api.ynab.com/v1',
-    'client' => [
-        'id' => env('YNAB_SDK_LARAVEL_CLIENT_ID'),
-        'secret' => env('YNAB_SDK_LARAVEL_CLIENT_SECRET'),
-    ],
-    'oauth' => [
-        'base_url' => env('YNAB_SDK_LARAVEL_OAUTH_BASE_URL', 'ynab-oauth'),
-        'base_name' => env('YNAB_SDK_LARAVEL_OAUTH_BASE_NAME', 'ynab-oauth'),
-    ],
-    'response_type' => env('YNAB_SDK_LARAVEL_RESPONSE_TYPE', 'code'),
-    'redirect_to' => [
-        'use_route_names' => env('YNAB_SDK_LARAVEL_REDIRECT_TO_USE_ROUTE_NAMES', true),
-        'after_callback' => env('YNAB_SDK_LARAVEL_REDIRECT_TO_AFTER_CALLBACK', 'home'),
-        'after_refresh' => env('YNAB_SDK_LARAVEL_REDIRECT_TO_AFTER_REFRESH', 'home'),
-    ]
-];
-```
-
 ## Usage
 
 Read the [wiki](https://github.com/danielh-official/ynab-sdk-laravel/wiki) to learn more about how to use this package in your Laravel project.
-
-## Running Tests
-
-To run tests, run the following command:
-
-```bash
-composer test
-```
-
-You may run tests with coverage:
-
-```bash
-composer test-coverage
-```
 
 ## Changelog
 
