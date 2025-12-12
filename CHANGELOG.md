@@ -2,6 +2,16 @@
 
 All notable changes to `ynab-sdk-laravel` will be documented in this file.
 
+## v1.2.0 - 2025-12-12
+
+### What's Changed
+
+* Added views and code for sample page
+* Added security policy and contribution guidelines
+* Moved README content to wiki
+
+**Full Changelog**: https://github.com/danielh-official/ynab-sdk-laravel/compare/v1.1.2...v1.2.0
+
 ## v1.1.2 - 2025-10-16
 
 ### What's Changed
