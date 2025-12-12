@@ -6,8 +6,7 @@ We take security seriously and provide security updates for the following versio
 
 | Version | Supported          |
 | ------- | ------------------ |
-| 1.1.x   | :white_check_mark: |
-| 1.0.x   | :x:                |
+| 1.0.x   | :white_check_mark: |
 | < 1.0   | :x:                |
 
 We recommend always using the latest version of the package to ensure you have the latest security patches and improvements.
@@ -20,10 +19,7 @@ We appreciate your efforts to responsibly disclose your findings and will make e
 
 **Please do not report security vulnerabilities through public GitHub issues.**
 
-Instead, please report security vulnerabilities using one of the following methods:
-
-1. **GitHub Security Advisories** (Preferred): Report vulnerabilities privately through [GitHub Security Advisories](https://github.com/danielh-official/ynab-sdk-laravel/security/advisories/new)
-2. **Email**: Send an email to the maintainer (see Contact Information below)
+**GitHub Security Advisories**: Report vulnerabilities privately through [GitHub Security Advisories](https://github.com/danielh-official/ynab-sdk-laravel/security/advisories/new)
 
 ### What to Include
 
